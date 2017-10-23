@@ -1,4 +1,4 @@
-# Making more sense of CSS
+# Making sense of CSS
 
 ---
 
