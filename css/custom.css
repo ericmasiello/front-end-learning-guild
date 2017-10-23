@@ -1,0 +1,5 @@
+.reveal section img {
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.05);
+  border-width: 2px;
+}
