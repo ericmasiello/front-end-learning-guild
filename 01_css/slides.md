@@ -4,25 +4,14 @@
 
 ## Agenda
 
-1. CSS anatomy
-2. CSS Selectors
+1. CSS Selectors
+2. CSS Combinators
 3. Specificity, inheritance, and importance
 4. Quiz
-
----
-
-## TODO: CSS Anatomy
 
 --
 
 * https://www.w3schools.com/css/css_syntax.asp (https://www.w3schools.com/css/selector.gif)
-* Combinators
-When you see a combinator, read this as saying, “only if”. A combinator is telling you that this style applies only if certain conditions are met in the HTML document — namely that HTML elements are organized in a specific way. This is the closest you can get to having actual logic in CSS.
-http://blog.frankmtaylor.com/2013/07/05/css-the-breakdown-part-one-the-selector-and-grammar/
-  * Child Selector https://designshack.net/articles/css/css-selectors-just-the-tricky-bits/
-  * Adjacent Selector
-  * Attribute Selector
-  * Pseudo Class Selectors
 
 ---
 
@@ -30,7 +19,35 @@ http://blog.frankmtaylor.com/2013/07/05/css-the-breakdown-part-one-the-selector-
 
 --
 
-### Tags, Classes & ID Selectors
+### CSS Anatomy
+
+![CSS Ruleset](img/css-ruleset-terminology.png)
+
+--
+
+### Tags, Attributes, Classes, Pseudo-Classes, & ID Selectors
+
+```css
+
+div { /* all divs */ }
+
+[href], { /* anything with an alt attribute */ }
+
+[href="http://www.google.com"] {
+    /* target just hrefs for google */
+}
+
+:hover { /* targets anything you hover over */ }
+
+.foo { /* anything with class foo */ }
+
+#bar { /* the only element with id=bar */ }
+
+```
+
+--
+
+### How do I target `Hello`, `World`, and `Eric`?
 
 ```html
 <div>
@@ -42,9 +59,9 @@ http://blog.frankmtaylor.com/2013/07/05/css-the-breakdown-part-one-the-selector-
 </div>
 ```
 
-How do I target these things?
-
 --
+
+What would this look like in the browser?
 
 ```html
 <div>
@@ -89,6 +106,39 @@ Target just the `<span>Eric</span>`?
     My name is <span>Eric</span> 
 </div>
 ```
+
+--
+
+### Multiple Classes
+* HTML elements can have multiple classes
+* Separate class names with a space
+
+```html
+<div class="message error primary">
+    ...
+</div>
+```
+```css
+.message {
+    /* ... */
+}
+
+.error {
+    /* ... */
+}
+
+.primary {
+    /* ... */
+}
+```
+
+---
+
+## CSS Combinators
+Allows us to target different elements based on their structural relationship to other selectors
+
+Note:
+When you see a combinator, read this as saying, “only if”. A combinator is telling you that this style applies only if certain conditions are met in the HTML document — namely that HTML elements are organized in a specific way. This is the closest you can get to having actual logic in CSS.
 
 --
 
@@ -141,28 +191,12 @@ section.error {
 
 --
 
-### Multiple Classes
-* HTML elements can have multiple classes
-* Separate class names with a space
+## Other CSS Combinators
 
-```html
-<div class="message error primary">
-    ...
-</div>
-```
-```css
-.message {
-    /* ... */
-}
-
-.error {
-    /* ... */
-}
-
-.primary {
-    /* ... */
-}
-```
+* Descendant selector (`space`)
+* Child selector (`>`)
+* Adjacent sibling selector (`+`)
+* General sibling selector (`~`)
 
 ---
 
@@ -172,6 +206,16 @@ section.error {
 Note:
 
 Now that we are feeling pretty good about CSS, let's look at some more complicated examples.
+
+---
+
+# What's the cascade?
+
+"It is an algorithm defining how to combine property values originating from different sources. It lies at the core of CSS as stressed by its name: Cascading Style Sheets."
+
+* User-agent stylesheet (browser default styles)
+* User custom style sheets
+* Author defined style sheets (the ones you make)
 
 ---
 
@@ -242,7 +286,7 @@ span {
 
 ### Specificity
 
-More selector parts > fewer selector parts
+More combinators > fewer combinators
 
 ```css
 p span {
@@ -310,6 +354,29 @@ Sidenote - the font-weight would still be bold since the second rule does not ov
 
 --
 
+### How specificity *actually* works
+
+* Start at 0
+* \+ 1000 for inline style attribute
+* \+ 100 for each ID
+* \+ 10 for each attribute, class or pseudo-class
+* \+ 1 for each element name or pseudo-element.
+```css
+body #content .data img:hover {}
+```
+The specificity value would be `122` (`0,1,2,2` or `0122`)
+
+Note:
+100 for `#content`, 10 for `.data`, 10 for `:hover`, 1 for `body` and 1 for `img`
+
+--
+
+### But generally just remember
+
+`id`s > `class`es > tags
+
+--
+
 ### Specificity
 #### Order
 
@@ -320,6 +387,25 @@ Given equal specificity, order matters.
 Note:
 
 Also matters in the order stylesheets are loaded.
+
+--
+
+### Tip:
+Can add specificity without adding classes
+
+```html
+<div class="message">
+    ...
+</div>
+```
+```css
+.message {
+    /* does its thing */
+}
+.message.message {
+    /* This is more specific */
+}
+```
 
 ---
 
@@ -408,7 +494,7 @@ p {
 
 ### Inheritance
 
-Children inherit the styles of their parents (well, [some of them](http://stackoverflow.com/questions/5612302/which-css-properties-are-inherited)).
+Children inherit the styles of their parents (well, [some of them](https://www.w3.org/TR/CSS21/propidx.html)).
 
 --
 
