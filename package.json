@@ -1,0 +1,25 @@
+{
+  "name": "front-end-learning-guild",
+  "version": "0.1.0",
+  "description": "Slides for front-enders",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericmasiello/front-end-learning-guild.git"
+  },
+  "author": "Eric Masiello <eric.j.masiello@gmail.com> (http://synbydesign.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericmasiello/front-end-learning-guild/issues"
+  },
+  "homepage": "https://github.com/ericmasiello/front-end-learning-guild#readme",
+  "devDependencies": {
+    "serve": "~6.4.1"
+  }
+}
