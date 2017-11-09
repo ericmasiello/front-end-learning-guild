@@ -243,6 +243,13 @@ Write your media queries _with_ your responsive components. Do not write them al
 
 ## Responsive Patterns
 
+#### Resources
+
+* [This is Responsive](https://bradfrost.github.io/this-is-responsive/patterns.html)
+* [Responsive Design Patterns](https://responsivedesign.is/patterns/)
+
+
+
 ---
 
 ## Questions? 🙄
