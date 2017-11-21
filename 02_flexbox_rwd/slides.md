@@ -1,12 +1,17 @@
-# Intro to Responsive Design and Responsive Patterns
+# CSS Layouts
+### Flexbox and Responsive Web Design
 
 ---
 
 ## Agenda
 
-1. The basics of Responsive Web Design (RWD)
-2. Building RWD responsibly
-3. Responsive Patterns
+1. Building layouts with Flexbox
+2. The basics of Responsive Web Design (RWD)
+3. RWD done responsibly
+
+---
+
+## Building layouts with Flexbox
 
 ---
 
@@ -135,7 +140,7 @@ In CSS, when two things have equal specificity, the last one wins
 
 ---
 
-## Building RWD responsibly
+## RWD done responsibly
 
 --
 
@@ -241,14 +246,11 @@ Write your media queries _with_ your responsive components. Do not write them al
 
 ---
 
-## Responsive Patterns
+## Resources 📚
 
-#### Resources
-
-* [This is Responsive](https://bradfrost.github.io/this-is-responsive/patterns.html)
-* [Responsive Design Patterns](https://responsivedesign.is/patterns/)
-
-
+* [Flexbox Froggy](http://flexboxfroggy.com/)
+* [Responsive Design Patterns](https://bradfrost.github.io/this-is-responsive/patterns.html)
+* [More Responsive Design Patterns](https://responsivedesign.is/patterns/)
 
 ---
 
