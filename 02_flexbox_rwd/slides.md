@@ -136,10 +136,10 @@ This is using flex-direction: row
 
 | | | |
 |-|-|-|
-| flex-start (default)| <img src="img/align-flex-start.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
+| flex-start | <img src="img/align-flex-start.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
 | flex-end | <img src="img/align-flex-end.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
 | center | <img src="img/align-center.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
-| stretch | <img src="img/align-stretch.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
+| stretch (default) | <img src="img/align-stretch.png" style="height: 150px; padding: 0; border: 0; margin: 0;" /> |
 
 Note:
 * Still using flex-direction: row
