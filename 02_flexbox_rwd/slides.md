@@ -30,14 +30,17 @@ Note:
 
 ### Primer: Box Model
 
-<img src="img/box-model.png" style="height: 250px; padding: 0; border: 0; margin: 0;" />
+| | |
+|-|-|
+|<img src="img/box-model-content-box.png" style="height: 250px; padding: 0; border: 0; margin: 0;" />|<img src="img/box-model-border-box.png" style="height: 250px; padding: 0; border: 0; margin: 0;" />|
+| `content-box` | `border-box` |
 
 ```css
 div {
-  /* default => box-sizing: content-box; */
+  box-sizing: content-box; /* default */
+  box-sizing: border-box; /* generally what you want */
   border: 6px solid #949599;
   height: 100px;
-  margin: 20px;
   padding: 20px;
   width: 400px;
 }
@@ -151,7 +154,7 @@ Note:
 ### Flex item CSS properties
 
 * Flex items are defined by their immediate parent with:
- * `display: flex;` or
+ * `display: flex;`
  * `display: inline-flex;`
 * Can control cross axis alignment with CSS property `align-self`
 
@@ -306,7 +309,7 @@ When the screen >= 600px wide, we _also_ add these rulesets
 
 --
 
-#### What are the net styles at this point?
+#### What are the computed styles at this point?
 
 screen width \>= 600px
 
@@ -428,7 +431,7 @@ Mobile First
 
 ### Comparing Mobile to Desktop First
 
-Desktop First (3 more lines of code)
+Desktop First
 ```css
 .grid {
     display: flex;
