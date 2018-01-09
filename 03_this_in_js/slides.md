@@ -1,4 +1,4 @@
-# `this` in JS
+# How `this` actually works in JS
 
 ---
 
@@ -171,7 +171,7 @@ foo.apply(obj); // 'The Object'
 
 ### Quiz
 
-Will this work?
+Will clicking on the button work?
 
 ```js
 class Clicker extends React.Component {
@@ -224,7 +224,7 @@ Can it be improved?
 --
 ### Quiz Part 3
 
-What is this doing to `handleUpdateCount`?
+Explain what's happening here with `this` and `handleUpdateCount`?
 
 ```js
 class Clicker extends React.Component {
@@ -271,10 +271,17 @@ function Foo() {
   console.log(this.globalBar);
 }
 
-Foo(); // 'bar'
-var foo1 = new Foo(); // undefined
-console.log(foo1.name); // 'The foo'
+Foo(); // logs 'bar'
+var foo1 = new Foo(); // logs undefined
+console.log(foo1.name); // logs 'The foo'
 ```
+--
+
+### Bonus
+More detail than you probably cared to learn about constructor calls
+
+<img src="img/constructor.png" style="border: 0; padding: 10px; background: #fff" alt="JS Constructor diagram">
+
 --
 
 ### 5. Arrow functions
