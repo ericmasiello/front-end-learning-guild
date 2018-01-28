@@ -1,0 +1,14 @@
+{
+  "name": "01_basic_bundling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric Masiello <eric.j.masiello@gmail.com> (http://synbydesign.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "~3.10.0"
+  }
+}

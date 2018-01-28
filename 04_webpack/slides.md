@@ -56,21 +56,112 @@ have required both Browserify and Grunt/Gulp
 
 ## Webpack
 
+* *It's just a bundler.*
+* Creates a dependency graph via an entry point
+* Define a bundle
+
+`(entry.js => A.js => B.js & C.js) = bundle.js`
+
+--
+
+### Getting started
+
+```
+npm install -D webpack
+```
+
+--
+
+### Webpack configuration
+
+```js
+const path = require('path');
+
+module.exports = {
+  // Here the application starts executing
+  entry: './app/entry', 
+  output: {
+    // options related to how webpack emits results
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  }
+};
+```
+--
+
+### Exercise
+
+1. Go to `04_webpack/01_basic_bundling/`
+2. Install Webpack
+3. Create a configuration that will build the bundle
+4. Open the `index.html` page to verify it works
+
+**Hint:** Look at `index.html` first to determine where the bundle should live and what it should be called
+
+--
+
+### Understanding the bundle
+
+TODO: https://webpack.js.org/concepts/manifest/
+
 ---
 
-## Getting started
+## Webpack: The Advanced Stuff
+
+--
+
+## What haven't we done yet?
+
+1. No Transpilation
+2. No Loaders
+3. No Plugins
+4. No Babel
+
+--
+
+--
+
+### Loaders
+
+--
+
+### Babel
+
+--
+
+### Sourcemaps
+
+How do I debug this crap?
+
+--
+
+### Plugins
+
+* How do you build CSS?
+* How do you build images?
+
+--
 
 ---
 
-## Webpack configuration
+## Webpack Dev Server
+
+--
+
+### Hot Module Replacement
+
+---
+
+## Custom environment based builds
+
+`webpack --env=dev`
+`webpack -p`
 
 ---
 
 ## Resources & Credits 📚
 
-* [Kyle Simpson _You Don’t Know JS_ book series](https://www.amazon.com/Kyle-Simpson/e/B006MAHIQ6/ref=pd_sim_14_bl_1?_encoding=UTF8&refRID=1B2A83TFWJB2QXGGAKJJ)
-* [_Understand JavaScript's this Keyword in Depth_ on Egghead](https://egghead.io/lessons/javascript-this-in-the-global-context)
-* [Babel Class Properties Transform Plugin](https://babeljs.io/docs/plugins/transform-class-properties/)
+* [Webpack documentation](https://webpack.js.org/)
 
 ---
 
