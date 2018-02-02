@@ -5,4 +5,4 @@ const list = buildTodoList(todos);
 
 const root = document.getElementById('root');
 
-root.append(list);
+root.appendChild(list);

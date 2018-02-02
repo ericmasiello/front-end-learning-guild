@@ -3,7 +3,7 @@ const buildTodoList = (todos) => {
   todos.forEach((todo, i) => {
     const itemElm = document.createElement('li');
     itemElm.innerText = todo;
-    listElm.append(itemElm);
+    listElm.appendChild(itemElm);
   });
 
   return listElm;
