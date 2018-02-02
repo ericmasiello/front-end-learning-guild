@@ -56,11 +56,17 @@ have required both Browserify and Grunt/Gulp
 
 ## Webpack
 
-* *It's just a bundler.*
-* Creates a dependency graph via an entry point
-* Define a bundle
+*It's just a bundler.*
 
-`(entry.js => A.js => B.js & C.js) = bundle.js`
+* Creates a dependency graph via an entry point
+* Outputs a bundle\*.
+
+`[input] (entry.js => A.js => B.js & C.js) = bundle.js [output]`
+
+Note:
+Webpack treats your project as a dependency graph. You can have an index.js in your project that pulls in dependencies your project needs through standard `require` or `import` statements.
+
+This is different than how task runners like Grunt or Gulp work. They typically just iterate over a directory of files and concatenate them together.
 
 --
 
@@ -106,41 +112,57 @@ TODO: https://webpack.js.org/concepts/manifest/
 
 ---
 
-## Webpack: The Advanced Stuff
+## Webpack: The More Advanced Stuff
+#### What haven't we done yet?
 
---
+1. No transpilation (Babel)
+2. Added Loaders
+3. Used any Plugins
 
-## What haven't we done yet?
-
-1. No Transpilation
-2. No Loaders
-3. No Plugins
-4. No Babel
-
---
-
---
+---
 
 ### Loaders
+* Applies specific transformation(s) against a module's content
+* Matched with modules via regular expressions (usually by file extension)
+* Can be used to load any type of content (images, fonts, etc.)
+
+Note:
+This is part of what makes Webpack unique. Webpack can match against any type of module as opposed to something like Babel or Sass.
+
+Webpack can emit everything as a single bundle or emit separate bundles based on split configurations and plugins
 
 --
 
 ### Babel
+* Transforms code into JavaScript
+* Its configured through plugins and presets
+* Most commonly used for transforming new ES201X features and JSX into ES5
+* Can be used as a standalone tool (no need for Webpack)
+* Typically configured in `.babelrc`
 
 --
 
-### Sourcemaps
+### Babel and Webpack 
+Applied via the `babel-loader`
 
-How do I debug this crap?
+
 
 --
 
 ### Plugins
+* Allow you to intercept **runtime events** at different stages of of the bundling process
+* Often times, plugins are used in tandem w/ loaders
 
 * How do you build CSS?
 * How do you build images?
 
 --
+
+---
+
+### Sourcemaps
+
+How do I debug this crap?
 
 ---
 
