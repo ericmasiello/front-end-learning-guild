@@ -1,0 +1,19 @@
+{
+  "name": "02_using_loaders",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve",
+    "build": "webpack"
+  },
+  "author": "Eric Masiello <eric.j.masiello@gmail.com> (http://synbydesign.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "~6.26.0",
+    "babel-loader": "~7.1.2",
+    "babel-preset-env": "~1.6.1",
+    "serve": "~6.4.9",
+    "webpack": "~3.10.0"
+  }
+}
