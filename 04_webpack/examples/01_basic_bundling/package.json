@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "serve",
+    "build": "webpack"
   },
   "author": "Eric Masiello <eric.j.masiello@gmail.com> (http://synbydesign.com/)",
   "license": "MIT",
   "devDependencies": {
+    "serve": "~6.4.9",
     "webpack": "~3.10.0"
   }
 }
