@@ -1,7 +1,7 @@
 const todos = [
-  'Learn Front-end Tooling',
-  'Learn Webpack',
-  'Learn Babel',
+  'Front-end Tooling',
+  'Webpack',
+  'Babel',
 ];
 
 export default todos;
