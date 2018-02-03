@@ -98,12 +98,14 @@ module.exports = {
 ```
 --
 
-### Exercise
+### Exercise 01
 
 1. Go to `04_webpack/01_basic_bundling/`
 2. Install Webpack
 3. Create a configuration that will build the bundle
-4. Open the `index.html` page to verify it works
+4. Add a npm script for executing your build
+5. Open the `index.html` page to verify it works
+6. **BONUS:** Create a script for running Webpack in watch mode
 
 **Hint:** Look at `index.html` first to determine where the bundle should live and what it should be called
 

@@ -1,6 +1,6 @@
+import './app.css'
 import model from './model';
 import buildTodoList from './listView';
-import './app.css'
 
 const todoList = buildTodoList(model.todos);
 const completedList = buildTodoList(model.completedTodos);

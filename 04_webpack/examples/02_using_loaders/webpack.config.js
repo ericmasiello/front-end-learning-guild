@@ -16,13 +16,13 @@ module.exports = {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        include: PATHS.app
+        include: PATHS.app,
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
-        include: PATHS.app
-      }
+        include: PATHS.app,
+      },
     ],
-  }
-}
+  },
+};
