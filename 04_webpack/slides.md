@@ -235,13 +235,84 @@ Applied via the `babel-loader`
 
 ### Plugins
 
-* Allow you to intercept **runtime events** at different stages of of the bundling process
-* Often times, plugins are used in tandem w/ loaders
+* Loaders operate on module level
+* Plugins intercept **runtime events** at different stages of of the bundling process
+* Plugins are often used in tandem w/ loaders
+* Can be used to emit new files/bundles (typically non-JS)
 
-* How do you build CSS?
-* How do you build images?
+Note:
+Webpack by default only emits JavaScript bundles. We need loaders to emit other types of bundles.
 
 --
+
+### Problems with our current configuration
+
+* Does not emit a separate CSS file (no caching)
+* Flash of Unstyled Content (FOUC)
+
+--
+
+### Refining our CSS builds with `ExtractTextPlugin`
+
+* Still relies on `css-loader`
+* Replaces the use of `style-loader`
+* Requires a `plugin` to emit the CSS file
+
+--
+
+### Refining our CSS builds with `ExtractTextPlugin`
+
+```js
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = {
+  // ...
+  module: {
+    rules: [{
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader'
+      }),
+    }],
+  },
+  plugins: [new ExtractTextPlugin('styles.css')],
+};
+```
+
+--
+### A new problem... 🤬 🤬 🤬
+
+In index.html, we need to manually add:
+```html
+<link href="dist/styles.css" rel="stylesheet">
+```
+
+--
+
+### Enter: HTML Webpack Plugin 🤗 🤗 🤗
+
+* Generates an html file
+* Automatically references your bundles
+* Can be based off a `template`
+
+```js
+module.exports = {
+  // ...
+  plugins: [new HtmlWebpackPlugin()],
+};
+```
+
+--
+
+### Exercise 03: Using Plugins
+
+1. Go to `04_webpack/examples/03_using_plugins/`
+2. Install your npm dependencies
+3. Use `extract-text-webpack-plugin` to emit a `style.css` file
+4. Use `html-webpack-plugin` and the existing `src/index.html` as a `template`
+
+You should end up with 3 files in your `dist/` folder: `app.js`, `index.html`, and `styles.css`
 
 ---
 
