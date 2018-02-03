@@ -98,14 +98,19 @@ module.exports = {
 ```
 --
 
-### Exercise 01: Configuring Webpack from Scratch
+### Exercise 01: Webpack from scratch
 
-1. Go to `04_webpack/exercises/01_basic_bundling/`
-2. Install Webpack
-3. Create a configuration that will build the bundle
-4. Add a npm script for executing your build
-5. Run `npm start` to verify it works
-6. **BONUS:** Create a npm script for running Webpack in watch mode
+```shell
+git clone https://github.com/ericmasiello/front-end-learning-guild.git
+cd front-end-learning-guild
+cd 04_webpack/exercises/01_basic_bundling_starter/
+npm install
+```
+
+1. Create a configuration that will build the bundle
+2. Add a npm script for executing your build
+3. Run `npm start` to verify it works
+4. **BONUS:** Create a npm script for running Webpack in watch mode
 
 **Hint:** Look at `index.html` first to determine where the bundle should live and what it should be called
 
