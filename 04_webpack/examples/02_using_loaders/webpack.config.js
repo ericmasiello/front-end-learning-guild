@@ -1,9 +1,14 @@
 const path = require('path');
 
+const PATHS = {
+  app: path.join(__dirname, 'js'),
+  build: path.resolve(__dirname, 'dist'),
+};
+
 module.exports = {
-  entry: './js/index',
+  entry: PATHS.app,
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: PATHS.build,
     filename: 'app.js',
   },
   module: {
