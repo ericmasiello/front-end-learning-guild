@@ -100,7 +100,7 @@ module.exports = {
 
 ### Exercise 01: Configuring Webpack from Scratch
 
-1. Go to `04_webpack/examples/01_basic_bundling/`
+1. Go to `04_webpack/exercises/01_basic_bundling/`
 2. Install Webpack
 3. Create a configuration that will build the bundle
 4. Add a npm script for executing your build
@@ -226,7 +226,7 @@ Applied via the `babel-loader`
 
 ### Exercise 02: Using Loaders
 
-1. Go to `04_webpack/examples/02_using_loaders/`
+1. Go to `04_webpack/exercises/02_using_loaders/`
 2. Install your npm dependencies
 3. Transform your JavaScript with Babel (`.babelrc` is already configured)
 4. Add support for bundling CSS
@@ -307,7 +307,7 @@ module.exports = {
 
 ### Exercise 03: Using Plugins
 
-1. Go to `04_webpack/examples/03_using_plugins/`
+1. Go to `04_webpack/exercises/03_using_plugins/`
 2. Install your npm dependencies
 3. Use `extract-text-webpack-plugin` to emit a `style.css` file
 4. Use `html-webpack-plugin` and the existing `src/index.html` as a `template`
