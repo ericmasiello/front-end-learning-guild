@@ -1,5 +1,8 @@
 # Webpack
 
+Note:
+Goal: by end of this you should be able to look at an existing webpack config and have a pretty good idea what is going on. Also, you should feel comfortable writing your own basic config from scratch.
+
 ---
 
 ## Agenda
