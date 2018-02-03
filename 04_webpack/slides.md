@@ -106,9 +106,16 @@ module.exports = {
 
 --
 
-### Understanding the bundle
+### What's in a bundle
+https://webpack.js.org/concepts/manifest/
 
-TODO: https://webpack.js.org/concepts/manifest/
+* Your [transformed] code
+* The Webpack runtime (bootstrap script)
+* A manifest
+* `import` and `require` are replaced with `__webpack_require__`
+
+Note:
+The manifest and runtime are what tell the browser how to begin executing your code. Manifest is assembled as Webpack walks the dependency tree. The manifest is what manages all the dependencies and the runtime is what executes your app starting at the entry point
 
 ---
 
@@ -134,6 +141,7 @@ Webpack can emit everything as a single bundle or emit separate bundles based on
 --
 
 ### Babel
+
 * Transforms code into JavaScript
 * Its configured through plugins and presets
 * Most commonly used for transforming new ES201X features and JSX into ES5
@@ -142,10 +150,48 @@ Webpack can emit everything as a single bundle or emit separate bundles based on
 
 --
 
+### Setting up Babel
+
+```
+npm install -D babel-core babel-preset-env
+```
+
+Create a `.babelrc`
+```
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": [
+          "YOUR", "BROWSER", "LIST", "GOES", "HERE"
+        ]
+      }
+    }]
+  ]
+}
+```
+
 ### Babel and Webpack 
 Applied via the `babel-loader`
 
+```js
+{
+  // rest of webpack config...
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      }
+    ],
+  },
+}
+```
 
+--
+
+### Exercise 02: Using Loaders
 
 --
 
