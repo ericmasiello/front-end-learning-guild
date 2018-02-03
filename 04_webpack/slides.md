@@ -231,10 +231,13 @@ Applied via the `babel-loader`
 
 ### Exercise 02: Using Loaders
 
-1. Go to `04_webpack/exercises/02_using_loaders/`
-2. Install your npm dependencies
-3. Transform your JavaScript with Babel (`.babelrc` is already configured)
-4. Add support for bundling CSS
+```shell
+cd 04_webpack/exercises/02_using_loaders_starter/
+npm install
+```
+
+1. Transform your JavaScript with Babel (`.babelrc` is already configured)
+2. Add support for bundling CSS
 
 --
 
