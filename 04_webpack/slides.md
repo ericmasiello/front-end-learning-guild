@@ -191,11 +191,40 @@ Applied via the `babel-loader`
 
 --
 
+### Working with CSS
+
+* Webpack does not handle styling out of the box
+* Add support to import styles (e.g. `import './style.css'`) via loaders & plugins
+* `style-loader` injects CSS into a `style` tag
+* `css-loader` treats relative CSS `@import` and `url()` as ES2015 `import`s
+* Can use `file-loader` or `url-loader` for handling other static assets (e.g. images)
+
+--
+
+### Basic CSS Module Configuration
+
+```js
+{
+  // rest of webpack config...
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+}
+```
+
+--
+
 ### Exercise 02: Using Loaders
 
 --
 
 ### Plugins
+
 * Allow you to intercept **runtime events** at different stages of of the bundling process
 * Often times, plugins are used in tandem w/ loaders
 
