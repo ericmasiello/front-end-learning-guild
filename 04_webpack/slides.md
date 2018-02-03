@@ -316,27 +316,6 @@ You should end up with 3 files in your `dist/` folder: `app.js`, `index.html`, a
 
 ---
 
-### Sourcemaps
-
-How do I debug this crap?
-
----
-
-## Webpack Dev Server
-
---
-
-### Hot Module Replacement
-
----
-
-## Custom environment based builds
-
-`webpack --env=dev`
-`webpack -p`
-
----
-
 ## Resources & Credits 📚
 
 * [Webpack documentation](https://webpack.js.org/)
