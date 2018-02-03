@@ -114,14 +114,14 @@ npm install
 
 **Hint:** Look at `index.html` first to determine where the bundle should live and what it should be called
 
---
+---
 
-### What's in a bundle
+## What's in a bundle
 https://webpack.js.org/concepts/manifest/
 
-* Your [transformed] code
+* Your (transformed) code
 * The Webpack runtime (bootstrap script)
-* A manifest
+* A manifest of dependencies
 * `import` and `require` are replaced with `__webpack_require__`
 
 Note:
@@ -132,13 +132,13 @@ The manifest and runtime are what tell the browser how to begin executing your c
 ## Webpack: The More Advanced Stuff
 #### What haven't we done yet?
 
-1. No transpilation (Babel)
-2. Added Loaders
-3. Used any Plugins
+1. No transpilation (e.g. using Babel)
+2. Handled CSS
+3. Used Loaders or Plugins
 
 ---
 
-### Loaders
+## What are Webpack Loaders?
 * Applies specific transformation(s) against a module's content
 * Matched with modules via regular expressions (usually by file extension)
 * Can be used to load any type of content (images, fonts, etc.)
@@ -162,7 +162,7 @@ Webpack can emit everything as a single bundle or emit separate bundles based on
 
 ### Setting up Babel
 
-```
+```shell
 npm install -D babel-core babel-preset-env
 ```
 
@@ -181,8 +181,15 @@ Create a `.babelrc`
 }
 ```
 
+--
+
 ### Babel and Webpack 
+
 Applied via the `babel-loader`
+
+```shell
+npm install -D babel-loader
+```
 
 ```js
 {
@@ -204,9 +211,28 @@ Applied via the `babel-loader`
 ### Working with CSS
 
 * Webpack does not handle styling out of the box
-* Add support to import styles (e.g. `import './style.css'`) via loaders & plugins
+* Loaders & plugins support importing styles
+
+```js
+// app.js
+
+import React from 'react';
+import './style.css';
+
+// ...
+
+```
+
+--
+
+### The necessary loaders
+
+```shell
+npm install -D style-loader css-loader
+```
+
 * `style-loader` injects CSS into a `style` tag
-* `css-loader` treats relative CSS `@import` and `url()` as ES2015 `import`s
+* `css-loader` treats relative CSS paths within `@import` and `url()` as ES2015 `import`s
 * Can use `file-loader` or `url-loader` for handling other static assets (e.g. images)
 
 --
@@ -239,12 +265,12 @@ npm install
 1. Transform your JavaScript with Babel (`.babelrc` is already configured)
 2. Add support for bundling CSS
 
---
+---
 
-### Plugins
+## So then what's a Webpack plugin?
 
 * Loaders operate on module level
-* Plugins intercept **runtime events** at different stages of of the bundling process
+* Plugins intercept *runtime events* at different stages of the bundling process
 * Plugins are often used in tandem w/ loaders
 * Can be used to emit new files/bundles (typically non-JS)
 
@@ -270,6 +296,10 @@ Webpack by default only emits JavaScript bundles. We need loaders to emit other 
 
 ### Refining our CSS builds with `ExtractTextPlugin`
 
+```shell
+npm install -D extract-text-webpack-plugin
+```
+
 ```js
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -291,7 +321,7 @@ module.exports = {
 --
 ### A new problem... 🤬 🤬 🤬
 
-In index.html, we need to manually add:
+Now inside of `index.html`, we need to manually add:
 ```html
 <link href="dist/styles.css" rel="stylesheet">
 ```
@@ -304,7 +334,13 @@ In index.html, we need to manually add:
 * Automatically references your bundles
 * Can be based off a `template`
 
+```shell
+npm install -D html-webpack-plugin
+```
+
 ```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   // ...
   plugins: [new HtmlWebpackPlugin()],
@@ -315,18 +351,27 @@ module.exports = {
 
 ### Exercise 03: Using Plugins
 
-1. Go to `04_webpack/exercises/03_using_plugins/`
-2. Install your npm dependencies
-3. Use `extract-text-webpack-plugin` to emit a `style.css` file
-4. Use `html-webpack-plugin` and the existing `src/index.html` as a `template`
+```shell
+cd 04_webpack/exercises/03_using_plugins_starter/
+npm install
+```
+
+1. Use `extract-text-webpack-plugin` to emit a `style.css` file
+2. Use `html-webpack-plugin` and the existing `src/index.html` as a `template`
 
 You should end up with 3 files in your `dist/` folder: `app.js`, `index.html`, and `styles.css`
+
+* https://github.com/jantimon/html-webpack-plugin
+* https://github.com/webpack-contrib/extract-text-webpack-plugin
 
 ---
 
 ## Resources & Credits 📚
 
 * [Webpack documentation](https://webpack.js.org/)
+* [*Survive JS - Webpack* book](https://survivejs.com/webpack/)
+* [HTML Webpack Plugin](https://github.com/jantimon/html-webpack-plugin)
+* [Extract Text Webpack Plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin)
 
 ---
 
