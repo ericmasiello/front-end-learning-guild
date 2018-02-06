@@ -1,5 +1,9 @@
 # Webpack
 
+https://github.com/ericmasiello/front-end-learning-guild
+
+(Clone me 👬)
+
 Note:
 Goal: by end of this you should be able to look at an existing webpack config and have a pretty good idea what is going on. Also, you should feel comfortable writing your own basic config from scratch.
 
@@ -8,12 +12,10 @@ Goal: by end of this you should be able to look at an existing webpack config an
 ## Agenda
 
 1. Overview of front-end tooling
-2. Webpack
-3. Getting started
-4. Webpack configuration
-5. Environment builds
-6. Plugins
-7. Webpack Dev Server
+2. Webpack basics
+3. The bundle
+4. Webpack loaders
+5. Webpack plugins
 
 ---
 
@@ -88,7 +90,7 @@ const path = require('path');
 
 module.exports = {
   // Here the application starts executing
-  entry: './app/entry', 
+  entry: './src/entry', 
   output: {
     // options related to how webpack emits results
     path: path.resolve(__dirname, 'dist'),
@@ -232,7 +234,7 @@ npm install -D style-loader css-loader
 ```
 
 * `style-loader` injects CSS into a `style` tag
-* `css-loader` treats relative CSS paths within `@import` and `url()` as ES2015 `import`s
+* `css-loader` treats relative CSS paths within `@import` and `url()` as ES `import`s
 * Can use `file-loader` or `url-loader` for handling other static assets (e.g. images)
 
 --
