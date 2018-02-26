@@ -1,10 +1,27 @@
-# Webpack Part 2: Work in Progress
+# Webpack Part 2: Optimizations
 
 ---
 
 ## Agenda
 
-1. TODO
+1. Developer Optimizations: 
+ * Sourcemaps
+ * Custom Environment Settings
+2. Customer Optimizations
+ * Analyzing your bundles https://hackernoon.com/optimising-your-application-bundle-size-with-webpack-e85b00bab579
+ * Include only what you need (e.g. `import groupBy from 'lodash/groupBy'`)
+ * Bundle monitoring? Look at https://github.com/ai/size-limit
+ * Production Flag `-p`
+ * Sourcemaps in prod builds ?? (investigate if source map choice affects bundle size)
+ * Vendor vs. App bundles
+ * Code Splitting (https://serverless-stack.com/chapters/code-splitting-in-create-react-app.html)
+
+
+---
+
+### Warning 🖐
+
+This applies to Webpack 3.x. Webpack 4.x is now available and has slightly different approaches for optimizing bundles.
 
 ---
 
