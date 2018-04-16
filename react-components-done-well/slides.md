@@ -4,24 +4,93 @@
 
 ## Smart vs. dumb components
 
+* Dumb aka _Presentational_ components
 * Smart aka _Container_ components
-* Dumb aka _Presentation_ components
 
 --
 
-### What's a dumb component?
-* Typically paired with CSS styling
-* Preferably a Stateless Functional Component (as opposed to class)
-* Easily tested through Enzyme and snapshots
-* Represents 80 - 90% of your components
+### "Dumb" components
+* Sole responsibility is for presentation
+* Props → View
+* Closely paired with CSS
+* Should be stateless
+* Should represent the majority of your components
+* Very easily unit testable
+
+Note:
+
+Dumb components are called "presentational" components because their sole job is
+to "present" something to the DOM. They represent an input of props to an output
+of a view. This also makes them easily testable. Ideally we want to have a
+whole bunch of dumb components to break up our UI into modular/reusable pieces.
+This is not dissimilar to breaking up functions in code refactoring.
+
+You can think of dumb components as a vessel for markup, styling, and any basic
+conditional logic that comprises your view.
+
+Preferably a Stateless Functional Component (as opposed to class)
+
+By keeping these components stateless, we can think about composing them as
+modules in a larger view and across different contexts.
+
+The logic for dumb components can be extracted into utilities and
+state-management libraries. Dumb components are informed by smart components.
 
 --
 
-### What's a smart component?
+### Example "Dumb" component
 
-* Connects dumb components to actual data
-* Data may live in Redux, Reflux, or a top level component `state`
-* Typically no CSS applied here
+```xml
+const Greeting = (props) => {
+  return(
+    <div className="greeting">
+      Hello, {props.name}
+    </div>
+  );
+}
+```
+
+--
+
+### "Smart" components
+
+* A container that hydrates "dumb" components with data
+* Handles state
+* Data may live in Redux, or a top level component
+* Passes down props and callbacks to "dumb" components
+* Typically not styled
+
+Note:
+
+The "smart" component acts as a wrapper around dumb components. They,
+essentially, hydrate the dumb components with data from the state. This allows
+us to reuse the dumb components for the UI/view and swap out the smart
+components and data. Again, separation of concerns. This also applies to tests.
+
+Container components are the primary way of connecting to the store in Redux.
+
+--
+
+### Example "smart" component
+
+```
+class GreetingContainer extends Component {
+
+  state = { name: '' }
+
+  componentDidMount() {
+    fetch('/api/name/...')
+      .then(response => response.json())
+      .then({ name } => this.setState({ name }));
+  }
+
+  render() {
+    return (
+      <Greeting name={this.state.name} />
+    );
+  }
+}
+```
 
 --
 
@@ -46,52 +115,101 @@
 
 ---
 
-## Dumb components done good
+## Dumb components dun' good
 
 --
 
 ### General best practices
 
+* KISS
 * Prefer stateless functional components
-* Add a `displayName` for better debugging with React Dev Tools
-* Do one thing only
+* Have one component/responsibility per module
+* Do one thing and do it well (Unix principle)
 * Think generic: avoid business logic
-* 1 component per file
+* Add a `displayName` for debugging
+
+Note:
+
+Remember that we are using dumb components as a vessel for styling the UI
+We want these components to be easily understandable at a glance, so that means
+we should be aware of when it is best to decompose components down into smaller
+parts.
 
 --
 
 ### Prop dos
-* Define `propTypes` for validation
 * Fewer `props` === better!
-* Always support a `className` prop
-* Spread remaining `props` on top level element
-* Support a `tag` `prop`
+* Use common and clear naming conventions
+* Define `propTypes` for validation
+* Support passing down a `className` prop
+* Spread remaining `props` on the top level element
+* Support passing a `tag` as a prop
 
 --
 
-### Examples
-...
---
+### The Reusable button
 
+```xml
+const Button = (props) => {
+  const {
+    className,
+    tag: Tag,
+    ...rest
+  } = props;
+
+  const classes = classNames(
+    className,
+    'button',
+  );
+
+  return (
+    <Tag {...rest} className={classes} />
+  );
+}
+```
+
+Note:
+
+- The component is self closing and we didn't explicitly pass children
+- We can pass another tag, like <a> to make this button render as a link
+- We can provide any other kind of class name we want for more styles
+- by spreading the rest of props onto an element, you can accommodate things
+  like props you didn't originally think of (eg. 'data-automation-hook')
+
+--
 
 ### Prop don'ts
 
-* Avoid deeply nested `props` (e.g. objects, arrays) when possible
-* Avoid prop names that may collide with HTML attributes (e.g. `type` or `role`)
+* Avoid deeply nested `props` (e.g. objects, arrays)
+* Avoid prop names that may collide with HTML attributes
+  * (e.g. `type` or `role`)
+* Avoid highly specific prop names
+  * (use the component as your namespace)
+
+Note:
+
+You can equivocate the number of props on a component to function arity, a high
+function arity is a bad thing because it makes your function harder to use.
 
 --
 
-### Highly composable
+### Composability
 
 * Don't do too much
 * Keep the component shallow (allows for more control in how they are composed)
 * Pass through elements via `props.children`
 
---
+Note:
 
-### Examples
-...
+Decomposing big components causes you to have a lot of smaller components,
+but who cares? Those smaller components will have much easier unit tests and the
+larger component will be much more flexible across various contexts. It will
+also be easier in the future if someone decides that one part of the larger
+component needs to be changed or removed. The changes are scoped to a smaller
+section of the larger component. This is similar to breaking your code up into
+smaller sub-functions
 
+- Try to extract logic and functionality out into separate utility files
 
 ---
 
@@ -128,3 +246,7 @@ return (
   </button>
 )
 ```
+
+---
+
+## Demo
