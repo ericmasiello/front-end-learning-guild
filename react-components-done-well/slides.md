@@ -11,11 +11,11 @@
 
 ### "Dumb" components
 * Sole responsibility is for presentation
-* Props → View
 * Closely paired with CSS
+* Props → View
 * Should be stateless
-* Should represent the majority of your components
 * Very easily unit testable
+* Should represent the majority of your components
 
 Note:
 
@@ -69,6 +69,8 @@ components and data. Again, separation of concerns. This also applies to tests.
 
 Container components are the primary way of connecting to the store in Redux.
 
+- Seperation of concerns
+
 --
 
 ### Example "smart" component
@@ -121,10 +123,9 @@ class GreetingContainer extends Component {
 
 ### General best practices
 
-* KISS
-* Prefer stateless functional components
-* Have one component/responsibility per module
 * Do one thing and do it well (Unix principle)
+* Have one component/responsibility per module
+* Prefer stateless functional components
 * Think generic: avoid business logic
 * Add a `displayName` for debugging
 
@@ -171,10 +172,11 @@ const Button = (props) => {
 Note:
 
 - The component is self closing and we didn't explicitly pass children
+- By spreading the rest of props onto an element, you can accommodate things
+  like props you didn't originally think of (eg. 'data-automation-hook')
 - We can pass another tag, like <a> to make this button render as a link
 - We can provide any other kind of class name we want for more styles
-- by spreading the rest of props onto an element, you can accommodate things
-  like props you didn't originally think of (eg. 'data-automation-hook')
+- This pattern can lend itself to multiple components (like in Stencil)
 
 --
 
@@ -213,10 +215,19 @@ smaller sub-functions
 
 ---
 
+### Composability Example
+
+Note:
+
+[ Eric adds example with PackageCards here ]
+
+
+---
+
 ## Styles
 
 * 1 component : 1 style file
-* Think generically (component should be able to exist in a vacuum)
+* Think generically (component should exist in a vacuum)
 * Component is responsible for importing its styles
 
 ```js
@@ -246,6 +257,10 @@ return (
   </button>
 )
 ```
+
+Note:
+
+#TODO: Add more in-depth example for element modifiers (BEM)
 
 ---
 
