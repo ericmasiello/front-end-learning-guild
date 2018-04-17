@@ -213,22 +213,83 @@ smaller sub-functions
 
 - Try to extract logic and functionality out into separate utility files
 
----
+--
 
-### Composability Example
+### Composability: not dun' good
 
-Note:
+```js
+<PackageCard
+  itemName="Basic"
+  itemActionNode="Get Started"
+  billingNote="after one-month free trial"
+/>
 
-[ Eric adds example with PackageCards here ]
+<PackageCard
+  itemName="Basic"
+  itemActionNode="Get Started"
+  billingNote="after one-month free trial"
+  bottomAction
+/>
+```
+Extra prop required just to reposition the button
 
+
+<small>(Stencil 1.7.5)</small>
+
+--
+
+### Composability: dun' good
+
+```js
+<PackageCard>
+  <PackageCard.Title>
+    Basic
+  </PackageCard.Title>
+  <PackageCard.Disclaimer>
+    after one-month free trial
+  </PackageCard.Disclaimer>
+  <Button color='primary'>
+    Get Started
+  </Button>
+</PackageCard>
+```
+* Put the elements wherever you want
+* Can attach props to each sub component directly
+
+
+<small>(Stencil 2.0.0-beta.12)</small>
+
+--
+
+### Package Card
+
+```js
+function PackageCard(props) {
+  const { children, ...rest } = props;
+  return (
+    <Card {...rest}>
+      <div className="package">
+        {children}
+      </div>
+    </Card>
+  );
+}
+
+PackageCard.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+PackageCard.displayName = 'PackageCard';
+
+```
 
 ---
 
 ## Styles
 
 * 1 component : 1 style file
-* Think generically (component should exist in a vacuum)
 * Component is responsible for importing its styles
+* Think generically - component should exist in a vacuum
 
 ```js
 import React from 'react'
@@ -246,21 +307,55 @@ export default Button;
 * Keep specificity low (use conventions like BEM)
 * Styles scoped to component
 
+Don't use:
+
 ```css
-.button { /* ... */ }
+.package .title { /* ... */ }
+.package .price { /* ... */ }
+.package .disclaimer { /* ... */ }
 ```
+
+Do use:
+```css
+.package__title { /* ... */ }
+.package__price { /* ... */ }
+.package__disclaimer { /* ... */ }
+```
+
+```html
+<article class="card">
+  <div class="package">
+    <h1 class="package__title">Basic</h1>
+    <div class="package__price">...</div>
+    <div class="package__disclaimer">after one-month free trial</div>
+    <button class="button button--primary">Get Started</button>
+  </div>
+</article>
+```
+
+--
+
+### Component example
+Optionally apply modifier (e.g. `hero--full-height`) classes via props
 
 ```js
-return (
-  <button className={classNames('button', className)} {...rest}>
-    {children}
-  </button>
-)
+import './Hero.scss';
+
+function Hero(props) {
+  const { fullHeight, children, className, tag: Tag, ...rest } = props;
+  const classes = classNames(
+    className,
+    'hero',
+    { 'hero--full-height': fullHeight },
+  );
+  return (
+    <Tag {...rest} className={classes}>
+      <div className="hero__overlay" />
+      {children}
+    </Tag>
+  );
+}
 ```
-
-Note:
-
-#TODO: Add more in-depth example for element modifiers (BEM)
 
 ---
 
