@@ -1,22 +1,24 @@
 # Smart Components in React
+## Part 1: <del>Mixins</del> and Higher Order Components
 
 ---
 
-## Level setting
+## Setup
 
-React Element vs. React Component.
-
-What's the difference?
-
-TODO: ...
+1. `git clone https://github.com/ericmasiello/front-end-learning-guild.git`
+2. `cd front-end-learning-guild/smart-components/exercises/01-basic-hoc`
+3. (if you have nvm) `nvm use`
+4. `npm install`
+5. `cd ../02-localstorage-hoc`
+6. `npm install`
 
 ---
 
 ### What can smart components used for?
 
 * Shared/cross-cutting concerns
-* Typically used for interfacing produced by side effects, e.g. `fetch()`
-* Producing side effects (e.g. track an analytics event on component mount)
+* Fetching data sources, e.g. `fetch()`
+* Producing side effects (e.g. track an analytics event when the component mounts)
 
 --
 
@@ -34,7 +36,9 @@ Note:
 
 ### Statefulness
 
-* Dumb components tend to stateless
+i.e. Does the component use `this.state`?
+
+* Dumb components tend to be stateless
 * Smart components tend to be stateful
 * ...But this isn't a hard rule
 
@@ -42,7 +46,7 @@ Note:
 
 ### What are smart components **NOT** used for
 
-Rendering `<JSX />` elements directly
+Rendering `<JSX />` with styles directly
 
 Note:
 At most, smart components may render a wrapping container element like a `<div />` but nothing more
@@ -90,21 +94,17 @@ TODO: Sumarize https://reactjs.org/blog/2016/07/13/mixins-considered-harmful.htm
 
 A function that takes a React Component and returns a new, wrapped React Component
 
-TODO: see https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006
-For examples, create tests that pass and have people fix the test by writing the component 
-
 ---
 
 ## How to write an HOC
 
 --
 
-### Imagine we have multiple pages that need the same data
+### Why?
+Imagine we have many components that need the same data
 
 ```js
-// Page1.js
 class Page1 extends React.Component {
-  static displayName = 'Page1';
   state = {
     data: [],
   };
@@ -129,9 +129,7 @@ class Page1 extends React.Component {
 ### And then...
 
 ```js
-// Page2.js
-class Page2 extends React.Component {
-  static displayName = 'Page2';
+class Page2 extends React.Component {  
   state = {
     data: [],
   };
@@ -160,7 +158,7 @@ class Page2 extends React.Component {
 
 --
 
-### How to write one
+### Make an HOC
 
 ```js
 const withData = (Component) => {
@@ -169,15 +167,13 @@ const withData = (Component) => {
       data: [],
     };
     componentDidMount() {
-      fetch('/the/data')
-        .then(result => result.json())
+      fetch('/the/data').then(result => result.json())
         .then(data => this.setState({ data }));
     }
     render() {
       return <Component data={this.state.data} />
     }
   }
-
   return DataWrapper;
 };
 ```
@@ -188,8 +184,6 @@ const Page1 = (props) => (
     <a href="/page2">Next</a>
   </div>
 );
-Page1.displayName = 'Page1';
-
 const Page1WithData = withData(Page1);
 // Then use <Page1WithData />
 ```
@@ -208,8 +202,6 @@ const DynamicPage = ({ title, data, ...rest}) => (
     Some other stuff
   </div>
 );
-
-DynamicPage.displayName = 'DynamicPage';
 ```
 
 Note:
@@ -247,27 +239,102 @@ const DynamicPageWithTracking = withData(DynamicPage);
 
 --
 
-### Missing `displayName`
+### `displayName`
 `displayName` is useful when debugging with React DevTools
 
+```js
+const DynamicPage = () => <div />;
+
+DynamicPage.displayName = 'DynamicPage';
+```
+
+<img src="img/react-tree.png" style="border: 0; padding: 10px; background: #fff" alt="React DevTools">
+
 --
 
-### Hoist statics
-
---
-
-### Examples in the wild: `react-redux`
+### Applying a `displayName` to a wrapped component
 
 ```js
-connect()
+const withData = (Component) => {
+  class DataWrapper extends React.Component {
+    // does all the stuff...
+  }
+
+  // sets the displayName using the static property displayName
+  // or falling back to the function's name
+  DataWrapper.displayName =
+    `withData(${Component.displayName || Component.name})`;
+
+  return DataWrapper;
+};
+```
+
+--
+
+### Hoisting statics
+
+Static properties on wrapped components need to manually be hoisted to the wrapped component
+
+```js
+// class based static
+class ComponentA extends React.Component {
+  static testMessage = () => 'testing a...';
+  render() {
+    return <div />;
+  }
+}
+
+// function based static
+const ComponentB = () => <div />;
+ComponentB.testMessage = () => 'testing b...';
+
+```
+
+--
+
+### HOCs without hoisting non-React statics
+
+```js
+ComponentA.testMessage(); // 'testing a...'
+ComponentB.testMessage(); // 'testing b...'
+
+withSomeHOC(ComponentA).testMessage();
+// Uncaught TypeError: ...testMessage is not a function
+
+withSomeHOC(ComponentB).testMessage();
+// Uncaught TypeError: ...testMessage is not a function
+```
+--
+
+### How to hoist non-React statics
+
+```js
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
+const withData = (Component) => {
+  class DataWrapper extends React.Component {
+    // does all the stuff...
+  }
+
+  DataWrapper.displayName =
+    `withData(${Component.displayName || Component.name})`;
+
+  hoistNonReactStatic(DataWrapper, Component);
+
+  return DataWrapper;
+};
 ```
 
 --
 
 ### HOC considerations
-* A HOC should be a pure function with no side-effects. It should not make any modifications and just compose the original component by wrapping it in another component.
-* Do not create a wrapped component using an HOC within a `render` method. Compose the HOC outside any component definition.
-* Static methods must be copied over to still have access to them. A simple way to do this is the hoist-non-react-statics package.
+* The HOC function should be pure (no side-effects): just compose the original component by wrapping it in another component
+* Apply `displayName`s based on the wrapped component's `displayName`
+* Static methods must be copied over to still have access to them. A simple way to do this is the `hoist-non-react-statics` package
+
+--
+### More HOC considerations
+* Do not create a wrapped component within a `render` method; compose the HOC outside any component definition.
 
 ```js
 // ...
@@ -275,20 +342,58 @@ render() {
   const BasicWithGoods = withTheGoods(BasicComponent); // <-- NO!
   return (
     <BasicWithGoods />
-  )
+  );
 }
 ```
 
+---
+
+# Exercises
 
 --
 
-### Pros & Cons
+## 1. Create a `withTracking` HOC
 
-\+ Easy to compose many HOCs
-\+ Feels "clean" in that you're only dealing with a composed Component
+`01-basic-hoc`
 
-\- Still has the same indirection problem as mixins
-\- Refs are not passed through (easily)
+* Run `npm test` (your tests will fail)
+* Fix them by building the `withTracking` HOC
+* **Hint:** Behavior is similar to `components/Step1.js`
+* **Hint:** the `withTracking` HOC is a function that returns a function
+
+```js
+const config = { /* config options */ };
+const Component = (props) => <div {...props} />;
+
+const ComponentWithTracking = withTracking(config)(Component);
+```
+
+--
+
+## 2. Create a `withStorage` HOC
+
+`02-localstorage-hoc`
+
+* Run `npm test` (your tests will fail)
+* Fix them by building the `withStorage` HOC
+* **Hint:** details on how to use the `localStorage` API are documented in `withStorage.js`
+* **Hint:** the wrapped component must be passed 3 prop methods: `load('key')`, `save('key', 'value')` and `remove('key')`
+
+```js
+const Component = (props) => <div {...props} />;
+
+const ComponentWithStorage = withStorage(Component);
+```
+
+---
+
+## HOC Pros & Cons
+
+* (\+) Easy to compose many HOCs
+* (\+) Feels "clean" in that you're only dealing with a composed Component
+
+* (\-) Has the same indirection problem as mixins
+* (\-) Refs are not passed through (easily)
 
 ---
 
@@ -342,5 +447,5 @@ function HelloWorld() {
 
 ## Further Reading
 
+* [Understanding React Higher-Order Components by Example](https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006)
 * [Smart and Dumb Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
-* [React Components, Elements, and Instances](https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html)

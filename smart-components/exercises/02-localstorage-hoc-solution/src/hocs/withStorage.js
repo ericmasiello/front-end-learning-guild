@@ -43,7 +43,8 @@ const withStorage = (Component) => {
     }
   }
 
-  Wrapper.displayName = `withStorage(${Component.displayName || Component.name})`;
+  // Wrapper.displayName = `withStorage(${Component.displayName || Component.name})`;
+  Wrapper.displayName = 'DynamicPage'
 
   hoistNonReactStatic(Wrapper, Component);
 
