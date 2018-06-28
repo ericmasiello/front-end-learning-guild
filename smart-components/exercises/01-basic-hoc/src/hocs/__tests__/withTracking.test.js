@@ -4,7 +4,7 @@ import withTracking from '../withTracking';
 jest.mock('../../utils/tracking');
 
 test('should render the component', () => {
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   const TestWithTracking = withTracking()(Test);
   const wrapper = shallow(<TestWithTracking />);
 
@@ -13,7 +13,7 @@ test('should render the component', () => {
 
 test('should track an event', () => {
   const mockTracker = jest.fn();
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   const TestWithTracking = withTracking({ tracker: mockTracker })(Test);
   const wrapper = shallow(<TestWithTracking />);
 
@@ -22,7 +22,7 @@ test('should track an event', () => {
 
 test('should track an event name', () => {
   const mockTracker = jest.fn();
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   const TestWithTracking = withTracking({ tracker: mockTracker, event: 'The Event' })(Test);
   const wrapper = shallow(<TestWithTracking />);
 
@@ -30,7 +30,7 @@ test('should track an event name', () => {
 });
 
 test('should pass down props to wrapped component', () => {
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   const TestWithTracking = withTracking()(Test);
   const wrapper = shallow(<TestWithTracking foo="foo1" bar="bar1" />);
 
@@ -39,7 +39,7 @@ test('should pass down props to wrapped component', () => {
 });
 
 test('should set the displayName', () => {
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   Test.displayName = 'TheTestComponent';
   const TestWithTracking = withTracking()(Test);
   
@@ -47,7 +47,7 @@ test('should set the displayName', () => {
 });
 
 test('should hoist static methods', () => {
-  const Test = () => <div>Hello world</div>;
+  const Test = () => <div />;
   const mockMethod = jest.fn();
   Test.someStaticMethod = mockMethod;
   const TestWithTracking = withTracking()(Test);
