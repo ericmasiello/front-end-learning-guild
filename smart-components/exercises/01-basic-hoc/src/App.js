@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+// import Step1 from './components/Step1';
+// import Step2 from './components/Step2';
 import './App.css';
 
 class App extends Component {
