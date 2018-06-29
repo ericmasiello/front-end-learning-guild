@@ -64,7 +64,7 @@ At most, smart components may render a wrapping container element like a `<div /
 
 ## What's a React mixin?
 
-* Deprecated way of sharing functionality between React components
+* <u>Deprecated</u> way of sharing functionality between React components
 * Required use of `React.createClass()`
 
 ```
@@ -84,9 +84,18 @@ const MyComponent = React.createClass({
 
 --
 
-### Why Mixins are no good
+### Mixins = no good
 
-TODO: Sumarize https://reactjs.org/blog/2016/07/13/mixins-considered-harmful.html
+* Bidirectional dependency between mixins and components makes refactoring error prone
+* Mixins can include their own mixins
+* Name collisions between components and mixins (or other mixins)
+* See https://reactjs.org/blog/2016/07/13/mixins-considered-harmful.html
+
+Note:
+* Because components can call mixin methods and mixins can call component methods, you can't safely assume that a find/replace to rename/refactor something in a module will cover your bases. You also need to look at the mixins included the component or components that include that mixin.
+* Problem is worsed by the fact that mixins can include their own mixins making the problem even worse
+* its one thing if you own authored the mixin and can simply rename it but what if you're using a 3rd party mixin with another 3rd party mixin
+* 
 
 ---
 
@@ -401,3 +410,4 @@ const ComponentWithStorage = withStorage(Component);
 
 * [Understanding React Higher-Order Components by Example](https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006)
 * [Smart and Dumb Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
+* [Mixins Considered Harmful](https://reactjs.org/blog/2016/07/13/mixins-considered-harmful.html)
