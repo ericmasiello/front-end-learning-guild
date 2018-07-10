@@ -264,20 +264,21 @@ DynamicPage.displayName = 'DynamicPage';
 ### Applying a `displayName` to a wrapped component
 
 ```js
-const withData = (Component) => {
-  class DataWrapper extends React.Component {
+const withStroage = (Component) => {
+  class Wrapper extends React.Component {
     // does all the stuff...
   }
 
   // sets the displayName using the static property displayName
   // or falling back to the function's name
-  DataWrapper.displayName =
-    `withData(${Component.displayName || Component.name})`;
+  Wrapper.displayName =
+    `withStorage(${Component.displayName || Component.name})`;
 
-  return DataWrapper;
+  return Wrapper;
 };
 ```
 
+<img src="img/react-tree-with-hoc.png" style="border: 0; padding: 10px; background: #fff" alt="React DevTools">
 --
 
 ### Hoisting statics
