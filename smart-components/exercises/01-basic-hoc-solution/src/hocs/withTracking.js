@@ -13,7 +13,8 @@ const withTracking = ({ tracker = tracking, event = '' } = defaultConfig) => (Co
       tracker(event);
     }
     render() {
-      return <Component {...this.props} />;
+      const { innerRef, ...rest } = this.props;
+      return <Component ref={innerRef} {...rest} />;
     }
   }
 

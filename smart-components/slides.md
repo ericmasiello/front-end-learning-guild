@@ -336,14 +336,109 @@ const withData = (Component) => {
 
 --
 
+### Passing `ref`s
+
+`ref`s can be applied to `class` based components as a way to access an underlying DOM node or component instance
+
+```js
+class Foo extends React.Component {
+  elm = null;
+
+  render() {
+    return (
+      <div ref={(domNode) => {
+        this.elm = domNode;
+      }}>
+        Foo!
+      </div>
+    );
+  };
+}
+```
+
+Note:
+- Not using React 16s `React.createRef();` API
+
+--
+
+### `ref`s in HOCs
+
+* Passing `ref`s to HOC's won't work out of the box
+* The `ref` is applied to the wrapper component, not to the wrapped one
+
+```js
+const WrappedHelloWorld = withData(HelloWorld);
+
+class Bar extends React.Component {
+  refToHelloWorld = null;
+
+  render() {
+    return (
+      <div>
+        <WrappedHelloWorld ref={(helloWorld) => {
+          // this will actually reference DataWrapper
+          // not, HelloWorld
+          this.refToHelloWorld = helloWorld;
+        }}} />
+      </div>
+    );
+  }
+}
+```
+--
+
+### `ref` HOC pattern
+
+```js
+const withData = (Component) => {
+  class DataWrapper extends React.Component {
+    // does all the stuff...
+
+    render() {
+      // pass along innerRef to ref of the wrapped component
+      const { innerRef, ...rest } = props;
+      return <Component ref={innerRef} {...rest} data={this.state.data} />
+    }
+  }
+  
+  // do all that other stuff...
+  return DataWrapper;
+};
+```
+
+--
+### Applying the `innerRef` pattern
+
+```js
+const WrappedHelloWorld = withData(HelloWorld);
+
+class Bar extends React.Component {
+  refToHelloWorld = null;
+
+  render() {
+    return (
+      <div>
+        {/* Use innerRef instead of ref */}
+        <WrappedHelloWorld innerRef={(helloWorld) => {
+          this.refToHelloWorld = helloWorld;
+        }}} />
+      </div>
+    );
+  }
+}
+```
+
+--
+
 ### HOC considerations
-* The HOC function should be pure (no side-effects): just compose the original component by wrapping it in another component
+* The HOC _function_ (factory) should be pure (no side-effects): just compose the original component by wrapping it in another component
 * Apply `displayName`s based on the wrapped component's `displayName`
 * Static methods must be copied over to still have access to them. A simple way to do this is the `hoist-non-react-statics` package
+* `ref`s must be passed down via a separate prop (e.g. `innerRef`)
 
 --
 ### More HOC considerations
-* Do not create a wrapped component within a `render` method; compose the HOC outside any component definition.
+Do not create a wrapped component within a `render` method
 
 ```js
 // ...
@@ -352,6 +447,18 @@ render() {
   return (
     <BasicWithGoods />
   );
+}
+```
+
+```js
+const BasicWithGoods = withTheGoods(BasicComponent); // <-- YES!
+
+class Comp extends React.Component {
+  render() {
+    return (
+      <BasicWithGoods />
+    );
+  }
 }
 ```
 

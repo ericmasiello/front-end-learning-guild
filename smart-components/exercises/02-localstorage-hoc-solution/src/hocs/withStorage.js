@@ -32,12 +32,14 @@ const withStorage = (Component) => {
     }
     
     render() {
+      const { innerRef, ...rest } = this.props;
       return (
         <Component
+          ref={innerRef}
           load={this.load}
           save={this.save}
           remove={this.remove}
-          {...this.props}
+          {...rest}
         />
       );
     }

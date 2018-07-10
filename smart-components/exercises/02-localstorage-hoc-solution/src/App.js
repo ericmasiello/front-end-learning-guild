@@ -3,8 +3,20 @@ import logo from './logo.svg';
 import withStorage from './hocs/withStorage';
 import './App.css';
 
+class Input extends React.Component {
+  render() {
+    const { load, save, remove, innerRef, ...rest } = this.props;
+    return <input {...rest} ref={(elm) => this.elm = elm} />;
+  } 
+}
+
+const InputWithStorage = withStorage(Input);
+
 class App extends Component {
   static storageKey = '__AppData__';
+
+  nameInput = null;
+
   state = {
     name: '',
     email: '',
@@ -15,6 +27,10 @@ class App extends Component {
     if (result) {
       const formData = JSON.parse(result);
       this.setState(formData);
+    }
+
+    if (this.nameInput) {
+      this.nameInput.elm.focus();
     }
   }
 
@@ -32,6 +48,11 @@ class App extends Component {
     });
   };
 
+
+  setNameRef = (elm) => {
+    this.nameInput = elm;
+  };
+
   render() {
     return (
       <div className="App">
@@ -43,7 +64,8 @@ class App extends Component {
           <div>
             <label>
               Name:
-              <input
+              <InputWithStorage
+                innerRef={this.setNameRef}
                 value={this.state.name}
                 onChange={this.handleNameUpdate}
               />
@@ -52,7 +74,7 @@ class App extends Component {
           <div>
             <label>
               Email:
-              <input
+              <InputWithStorage
                 type="email"
                 value={this.state.email}
                 onChange={this.handleEmailUpdate}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import withStorage from '../withStorage';
 
 let store;
@@ -84,4 +84,33 @@ test('should hoist static methods', () => {
 
   TestWithStorage.someStaticMethod();
   expect(mockMethod).toBeCalled();
+});
+
+test('should pass innerRef to ref', () => {
+  class Input extends React.Component {
+    render() {
+      const { load, save, remove, innerRef, ...rest } = this.props;
+      return <input {...rest} ref={(elm) => this.elm = elm} />;
+    } 
+  }
+
+  const InputWithStorage = withStorage(Input);
+
+  class Test extends React.Component {
+    inputElm = null;
+    setRef = (elm) => {
+      this.inputElm = elm
+    };
+    render() {
+      return (
+        <div>
+          <InputWithStorage innerRef={this.setRef} />
+        </div>
+      );
+    }
+  }
+
+  const wrapper = mount(<Test />);
+
+  expect(wrapper.instance().inputElm).toBeDefined();
 });
