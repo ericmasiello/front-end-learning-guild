@@ -9,7 +9,8 @@
   "author": "Eric Masiello <eric.j.masiello@gmail.com> (http://synbydesign.com/)",
   "license": "MIT",
   "devDependencies": {
-    "serve": "~6.4.9",
-    "webpack": "~3.10.0"
+    "serve": "^11.3.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   }
 }
