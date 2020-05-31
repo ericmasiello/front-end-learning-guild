@@ -7,8 +7,6 @@ const PATHS = {
   build: path.resolve(__dirname, "dist"),
 };
 
-const devMode = process.env.NODE_ENV !== "production";
-
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(PATHS.app, "index.html"),
 });

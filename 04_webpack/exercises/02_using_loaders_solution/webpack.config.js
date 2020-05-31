@@ -1,26 +1,26 @@
-const path = require('path');
+const path = require("path");
 
 const PATHS = {
-  app: path.join(__dirname, 'src'),
-  build: path.resolve(__dirname, 'dist'),
+  app: path.join(__dirname, "src"),
+  build: path.resolve(__dirname, "dist"),
 };
 
 module.exports = {
   entry: PATHS.app,
   output: {
     path: PATHS.build,
-    filename: 'app.js',
+    filename: "app.js",
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: "babel-loader",
         include: PATHS.app,
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
         include: PATHS.app,
       },
     ],
